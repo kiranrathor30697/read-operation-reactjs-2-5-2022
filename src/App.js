@@ -167,11 +167,11 @@ let getFriend = (pageno = 1) => {
           <Pagination.Prev onClick={(e)=>{prev(e)}} />
          {
             paginationItem.map(function(currentValue,index,arr){
-              return (
+              return currentValue /* (
                 <React.Fragment key={index}>
-                  currentValue;
+                   currentValue ;
                 </React.Fragment>
-              )
+              ) */
             })   
           }
           <Pagination.Next onClick={(e)=>{next(e)}} />

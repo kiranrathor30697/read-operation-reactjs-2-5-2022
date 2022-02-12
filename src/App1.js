@@ -21,7 +21,9 @@ const [paginationItem,setPaginationItem] = useState([]);
 let hendleDelete =(e)=>{
     //console.log(e);
     console.log(e.target.closest('tr').querySelector('td:first-child').innerHTML);
-    var delId = parseInt(e.target.closest('tr').querySelector('td:first-child').innerHTML);
+    var delid = parseInt(e.target.closest('tr').querySelector('td:first-child').innerHTML);
+    console.log(delid);
+
     swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -33,7 +35,8 @@ let hendleDelete =(e)=>{
 
       //API Call 
       try {
-        let po = await axios();
+        let po = await axios.delete(`${config.dev_url}/api/friends/:id`)
+        
       } catch (error) {
         console.log(error)
       }
