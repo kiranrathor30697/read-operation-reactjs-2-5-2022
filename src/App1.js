@@ -9,7 +9,7 @@ const axios = require('axios');
 const config = require ('./config.json');
 
 //rfc
-function App() {
+function App1() {
 //1. state/Hook variable
 const [friend,setFriend] = useState({
   data:[] 
@@ -49,38 +49,19 @@ let hendleDelete =(e)=>{
         //swal("Your imaginary file is safe!");
       }
     });
-}                       
+}  
+let loadMore =(e)=>{
+  console.log(e)
+}
+
 let goToPage =(e)=>{
   console.log('page Generate');
-  console.log(e.target.innerHTML);
+   console.log(e.target.innerHTML);
 
-  var pageno = parseInt(e.target.innerHTML);
-  getFriend(pageno);      
+   var pageno = parseInt(e.target.innerHTML); 
+  getFriend(pageno);       
 }
-let first =(e)=>{
-  console.log('First');
-  if(friend.meta.pagination.page !== 1){
-    getFriend(1);
-  }
-}
-let prev =(e)=>{
-  console.log('Prev');
-  if(friend.meta.pagination.page !== 1){
-    getFriend(friend.meta.pagination.page - 1);
-  }
-}
-let next =(e)=>{
-  console.log('Next');
-  if(friend.meta.pagination.page !== friend.meta.pagination.pageCount){
-    getFriend(friend.meta.pagination.page + 1);
-  }
-}
-let last =(e)=>{
-  console.log('Last');
-  if(friend.meta.pagination.page !== friend.meta.pagination.pageCount){
-    getFriend(friend.meta.pagination.pageCount);
-  }
-}
+
 
 let getFriend = (pageno = 1) => {
   console.log('Click button press');
@@ -88,7 +69,7 @@ let getFriend = (pageno = 1) => {
   //Api Call
   try {
       //return po = promise object
-      fetch(`${config.dev_url}/api/friends?pagination[page]=${pageno}&pagination[pageSize]=10`)
+      fetch(`${config.dev_url}/api/friends?pagination[page]=${pageno}&pagination[pageSize]=5`)
       .then((data)=>{
         console.log(data);
         return data.json()
@@ -99,14 +80,13 @@ let getFriend = (pageno = 1) => {
         setFriend(data);
         console.log(data.data);
 
-        var j = data.meta.pagination.page;
+        var j = data.meta.pagination.pageno;
         var arr = [];
-        for (let i = 1; i<=data.meta.pagination.pageCount; i++) {
-          if(i == j){
-            arr.push(<Pagination.Item active onClick={(e)=>{goToPage(e)}}>{i}</Pagination.Item>);
-          }else{
-            arr.push(<Pagination.Item onClick={(e)=>{goToPage(e)}}>{i}</Pagination.Item>);
-          }
+        for (let i = 1; i<=data.meta.pagination.pageSize; i++) {
+           if(i == j){ 
+            /* arr.push(<Button className="mb-5" onClick={(e)=>{goToPage(e)}} variant="outline-success">Load More</Button>) */
+            arr.push(<Pagination.Item active onClick={(e)=>{goToPage(e)}}>Load More</Pagination.Item>);
+           } 
         }
           setPaginationItem(arr);
         /* toast("I Hate You!"); */
@@ -166,19 +146,15 @@ let getFriend = (pageno = 1) => {
           </tbody> 
         </Table>
           <Pagination className="d-flex justify-content-center">
-          <Pagination.First onClick={(e)=>{first(e)}} />
-          <Pagination.Prev onClick={(e)=>{prev(e)}} />
-         {
-            paginationItem.map(function(currentValue,index,arr){
-              return (
-                <React.Fragment key={index}>
-                  currentValue;
-                </React.Fragment>
-              )
-            })   
-          }
-          <Pagination.Next onClick={(e)=>{next(e)}} />
-          <Pagination.Last onClick={(e)=>{last(e)}} />
+            {
+              paginationItem.map(function(currentValue,index,arr){
+                return (
+                  <React.Fragment key={index}>
+                    {currentValue}
+                  </React.Fragment>
+                )
+              })   
+            }
         </Pagination>
       </>
       }
@@ -187,4 +163,4 @@ let getFriend = (pageno = 1) => {
   );
 }
 
-export default App;
+export default App1;

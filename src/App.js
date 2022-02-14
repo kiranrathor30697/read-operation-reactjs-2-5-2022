@@ -33,7 +33,7 @@ let hendleDelete =(e)=>{
 
       //API Call 
       try {
-        let po = await axios();
+        let po = await axios.delete(`${config.dev_url}/api/friends/:id`);
       } catch (error) {
         console.log(error)
       }
@@ -53,7 +53,7 @@ let goToPage =(e)=>{
 
   var pageno = parseInt(e.target.innerHTML);
   getFriend(pageno);      
-}
+  }
 let first =(e)=>{
   console.log('First');
   if(friend.meta.pagination.page !== 1){
@@ -128,55 +128,51 @@ let getFriend = (pageno = 1) => {
       {
         friend.data.length > 0 && 
         <>
-            <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Friend Name</th>
-              <th>Surname</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          
-          <tbody>
-          {
-            friend.data.map(function(currentValue,i,arr){
-              //console.log(arr);
-              /* console.log(arr[i].id);
-              console.log(arr[i].attributes.surname); 
-              console.log(arr[i].attributes.Name);*/
-              
-              return(
-                  <tr key={i} >
-                    <td>{arr[i].id}</td>
-                    <td>{arr[i].attributes.Name}</td>
-                    <td>{arr[i].attributes.surname}</td>
-                    <td>
-                      <Button variant="success">View</Button>{' '}
-                      <Button variant="primary">Edit</Button>{' '}
-                      <Button variant="danger" onClick={(e)=>{hendleDelete(e);}}>Delete</Button>
-                    </td>
-                  </tr>
-                )
-              })
-            }
-          </tbody> 
-        </Table>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Friend Name</th>
+                <th>Surname</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+            {
+              friend.data.map(function(currentValue,i,arr){
+                //console.log(arr);
+                /* console.log(arr[i].id);
+                console.log(arr[i].attributes.surname); 
+                console.log(arr[i].attributes.Name);*/
+                
+                return(
+                    <tr key={i} >
+                      <td>{arr[i].id}</td>
+                      <td>{arr[i].attributes.Name}</td>
+                      <td>{arr[i].attributes.surname}</td>
+                      <td>
+                        <Button variant="success">View</Button>{' '}
+                        <Button variant="primary">Edit</Button>{' '}
+                        <Button variant="danger" onClick={(e)=>{hendleDelete(e);}}>Delete</Button>
+                      </td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody> 
+          </Table>
           <Pagination className="d-flex justify-content-center">
-          <Pagination.First onClick={(e)=>{first(e)}} />
-          <Pagination.Prev onClick={(e)=>{prev(e)}} />
-         {
-            paginationItem.map(function(currentValue,index,arr){
-              return currentValue /* (
-                <React.Fragment key={index}>
-                   currentValue ;
-                </React.Fragment>
-              ) */
-            })   
-          }
-          <Pagination.Next onClick={(e)=>{next(e)}} />
-          <Pagination.Last onClick={(e)=>{last(e)}} />
-        </Pagination>
+            <Pagination.First onClick={(e)=>{first(e)}} />
+            <Pagination.Prev onClick={(e)=>{prev(e)}} />
+            {
+              paginationItem.map(function(currentValue,index,arr){
+                return <React.Fragment key={index}> {currentValue}</React.Fragment>
+              })   
+            }
+            <Pagination.Next onClick={(e)=>{next(e)}} />
+            <Pagination.Last onClick={(e)=>{last(e)}} />
+          </Pagination>
       </>
       }
       
