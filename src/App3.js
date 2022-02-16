@@ -1,9 +1,8 @@
 //import area
-import './App.css';
 import { Button,  Table } from 'react-bootstrap';
 import {  useState } from 'react';
 const config = require ('./config.json')
-function App() {
+function App3() {
   //1. state/hook variable
   const [data, setData] = useState({
     data:[]
@@ -31,8 +30,8 @@ function App() {
     }
   }
   let lodeMore = ()=>{
-      if(data.meta.pagination.limit < data.meta.pagination.total ){
-        getData(data.meta.pagination.limit+8)
+      if(data.meta.pagination.total > data.meta.pagination.limit){
+        getData(data.meta.pagination.limit + 10)
       } 
   }
 
@@ -84,4 +83,4 @@ function App() {
   );
 }
 
-export default App;
+export default App3;
